@@ -4,10 +4,10 @@
 
 typedef struct Node {
     struct Node* next;
-    int number;//struct human student;
+    char* string;
 } Node;
 
-void push(Node* head, int newNumber);
+void push(Node* head, char* str);
 void printAll(Node* head);
 
 int len(Node* head);

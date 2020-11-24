@@ -1,19 +1,25 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
+#include "Functions.h"
+#include "List.h"
 
 
 
 int main() {
-	char* mas = (char*)malloc(50 * sizeof(char));
-	mas[0] = 'k';
-	mas[2] = 'o';
-	mas[1] = 't';
-	gets_s(mas, 49);
-	puts(mas);
+	Node node;
+	char misc[] = "11A:Sviridova:4.16:Frolova A.M.:27";
+	node.string = (char*)malloc(sizeof(char) * strlen(misc));
+	node.string = misc;
+	SplittedInfo* info = splitIntoStructure(&node);
 
-	char* kal;
-	gets_s(kal, 30);
-	puts(kal);
+	puts(info->classhead);
+	puts(info->teacher);
+
+	printf("\n\n");
+
+	puts(formStringFromSplitted(info));
 }
