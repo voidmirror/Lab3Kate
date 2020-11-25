@@ -14,3 +14,7 @@ Node* findByClass(Node* head, char* classs);
 Node* findByClasshead(Node* head, char* headFind);
 Node* findByTeacher(Node* head, char* teacher);
 void printSplittedInfo(SplittedInfo* info);
+bool isClassExisted(Node* head, char* isClass);
+SplittedInfo* createNewSplittedInfo();
+void addNewAssignment(Node* head);
+void changeData(Node* head);

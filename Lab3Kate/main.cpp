@@ -10,11 +10,12 @@
 
 
 int main() {
-	Node node;
-	char misc[] = "11A:Sviridova:4.16:Frolova A.M.:27";
-	node.string = (char*)malloc(sizeof(char) * strlen(misc));
-	node.string = misc;
-	SplittedInfo* info = splitIntoStructure(&node);
+	Node *node = (Node*) malloc(sizeof(Node));
+	char misc[] = "11A:Sviridova:4.16:Frolova A.M.:27\0";
+	node->string = (char*)malloc(sizeof(char) * strlen(misc) + 10);
+	node->string = misc;
+	node->next = NULL;
+	/*SplittedInfo* info = splitIntoStructure(&node);
 
 	puts(info->classhead);
 	puts(info->teacher);
@@ -22,4 +23,19 @@ int main() {
 	printf("\n\n");
 
 	puts(formStringFromSplitted(info));
+	
+	printf("\n\n");*/
+
+	char kol[] = "11B:bhnjm:333:dfg:32\0";
+	//push(node, kol);
+	add2list(node, kol);
+	char step[] = "7C:srf:2:srgvse:1\0";
+	//push(node, step);
+	add2list(node, step);
+	char gap[] = "7A:svkp:78:mknkjaw:32\0";
+	//push(node, gap);
+	add2list(node, gap);
+
+	print2(node);
+	return 0;
 }

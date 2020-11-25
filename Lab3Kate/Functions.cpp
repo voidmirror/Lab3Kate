@@ -3,12 +3,47 @@
 #include <string.h>
 #include "Functions.h"
 #include "List.h"
-void addLine(char* filename) {
 
+void addLine(char* fileName, char* string) {
+	FILE* f = fopen(fileName, "a");
+	if (f == NULL) {
+		printf("File does not exist\n");
+		//    return 0;
+	}
+	fwrite(string, sizeof(char), strlen(string), f);
+	fclose(f);
 }
 
-void isClassExisted() {
+bool isClassExisted(Node* head, char* isClass) {
+	if (findByClass(head, isClass) == NULL) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
 
+void addNewAssignment(Node* head) {
+	SplittedInfo* info = createNewSplittedInfo();
+	printf("Enter the Class: ");
+	gets_s(info->classs, 4);
+	if (isClassExisted(head, info->classs)) {
+		push(head, formStringFromSplitted(info));
+	}
+	else {
+		printf("This class is already existed in DataBase. Try to Change Data.");
+		return;
+	}
+	printf("Enter lastname of Head of the class: ");
+	gets_s(info->classhead, 19);
+	printf("Enter Average Mark of students: ");
+	gets_s(info->averageMark, 4);
+	printf("Enter teachers' lastname and initials: ");
+	gets_s(info->teacher, 19);
+	printf("Enter Students number: ");
+	gets_s(info->studentsNumber, 4);
+
+	
 }
 
 SplittedInfo* createNewSplittedInfo() {
@@ -137,19 +172,19 @@ void changeData(Node* head) {
 				gets_s(info->classs, 4);
 				break;
 			case 2:
-				printf("Enter new Class: ");
+				printf("Enter new Head of class: ");
 				gets_s(info->classhead, 19);
 				break;
 			case 3:
-				printf("Enter new Class: ");
+				printf("Enter new Average Mark: ");
 				gets_s(info->averageMark, 4);
 				break;
 			case 4:
-				printf("Enter new Class: ");
+				printf("Enter new Teacher: ");
 				gets_s(info->teacher, 19);
 				break;
 			case 5:
-				printf("Enter new Class: ");
+				printf("Enter new Students Number: ");
 				gets_s(info->studentsNumber, 4);
 				break;
 			case 6:
