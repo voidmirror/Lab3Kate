@@ -26,24 +26,27 @@ bool isClassExisted(Node* head, char* isClass) {
 void addNewAssignment(Node* head) {
 	SplittedInfo* info = createNewSplittedInfo();
 	printf("Enter the Class: ");
-	gets_s(info->classs, 4);
-	if (isClassExisted(head, info->classs)) {
-		push(head, formStringFromSplitted(info));
+	gets_s(info->classs, 5);
+	if (!isClassExisted(head, info->classs)) {
+		printf("Enter lastname of Head of the class: ");
+		gets_s(info->classhead, 20);
+		printf("Enter Average Mark of students: ");
+		gets_s(info->averageMark, 5);
+		printf("Enter teachers' lastname and initials: ");
+		gets_s(info->teacher, 20);
+		printf("Enter Students number: ");
+		gets_s(info->studentsNumber, 5);
+
+		add2list(head, formStringFromSplitted(info));
 	}
 	else {
 		printf("This class is already existed in DataBase. Try to Change Data.");
 		return;
 	}
-	printf("Enter lastname of Head of the class: ");
-	gets_s(info->classhead, 19);
-	printf("Enter Average Mark of students: ");
-	gets_s(info->averageMark, 4);
-	printf("Enter teachers' lastname and initials: ");
-	gets_s(info->teacher, 19);
-	printf("Enter Students number: ");
-	gets_s(info->studentsNumber, 4);
-
-	
+	printf("\n");
+	printSplittedInfo(info);
+	printf("\n");
+	free(info);
 }
 
 SplittedInfo* createNewSplittedInfo() {
@@ -111,7 +114,7 @@ Node* findByClass(Node* head, char* classs) {
 	int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
-		if (strcmp(splitIntoStructure(tmp)->classs, classs)) {
+		if (strcmp(splitIntoStructure(tmp)->classs, classs) == 0) {
 			return tmp;
 		}
 		i++;
@@ -120,11 +123,11 @@ Node* findByClass(Node* head, char* classs) {
 	return NULL;
 }
 
-Node* findByClasshead(Node* head, char* headFind) {
+Node* findByClasshead(Node* head, char* classhead) {
 	int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
-		if (strcmp(splitIntoStructure(tmp)->classhead, headFind)) {
+		if (strcmp(splitIntoStructure(tmp)->classhead, classhead) == 0) {
 			return tmp;
 		}
 		i++;
@@ -137,7 +140,7 @@ Node* findByTeacher(Node* head, char* teacher) {
 	int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
-		if (strcmp(splitIntoStructure(tmp)->teacher, teacher)) {
+		if (strcmp(splitIntoStructure(tmp)->teacher, teacher) == 0) {
 			return tmp;
 		}
 		i++;
@@ -147,11 +150,11 @@ Node* findByTeacher(Node* head, char* teacher) {
 }
 
 void printSplittedInfo(SplittedInfo* info) {
-	printf("Class: %s", info->classs);
-	printf("Heado of class: %s", info->classhead);
-	printf("Average mark: %s", info->averageMark);
-	printf("Teacher: %s", info->teacher);
-	printf("Students number: %s", info->studentsNumber);
+	printf("Class: %s\n", info->classs);
+	printf("Heado of class: %s\n", info->classhead);
+	printf("Average mark: %s\n", info->averageMark);
+	printf("Teacher: %s\n", info->teacher);
+	printf("Students number: %s\n", info->studentsNumber);
 }
 
 void changeData(Node* head) {
