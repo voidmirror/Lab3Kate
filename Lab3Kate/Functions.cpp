@@ -29,12 +29,12 @@ void saveToFile(Node* head, char* fileName) {
 	fclose(f);
 }
 
-void initFromFile(Node* head, char* fileName) {
+Node* initFromFile(Node* head, char* fileName) {
 	FILE* f = fopen(fileName, "r");
 
 	if (f == NULL) {
-		printf("File does not exist\n");
-		return;
+		//printf("File does not exist\n");
+		return NULL;
 	}
 	// freeList(head);
 
@@ -49,7 +49,10 @@ void initFromFile(Node* head, char* fileName) {
 		if (head == NULL) {		// e.g. head = null
 			char* newstr = (char*)malloc(sizeof(char) * 80);
 			strcpy(newstr, mystring);
-			initList(head, newstr);
+			//initList(head, newstr);
+			head = (Node*)malloc(sizeof(Node));
+			head->string = newstr;
+			head->next = NULL;
 		}
 		else {
 			char* newstr = (char*)malloc(sizeof(char) * 80);
@@ -63,6 +66,7 @@ void initFromFile(Node* head, char* fileName) {
 	}
 	free(mystring);
 	fclose(f);
+	return head;
 }
 
 void readFrom(char* fileName) {
@@ -94,11 +98,15 @@ bool isClassExisted(Node* head, char* isClass) {
 	}
 }
 
-void addNewAssignment(Node* head) {
+Node* addNewAssignment(Node* head) {
 	SplittedInfo* info = createNewSplittedInfo();
 	printf("Enter the Class: ");
-	gets_s(info->classs, 5);
-	if (!isClassExisted(head, info->classs)) {
+	if (head == NULL) {		// e.g. head = null
+		head = (Node*)malloc(sizeof(Node));
+		head->string = (char*)malloc(sizeof(char) * 80);
+		head->next = NULL;
+		
+		gets_s(info->classs, 5);
 		printf("Enter lastname of Head of the class: ");
 		gets_s(info->classhead, 20);
 		printf("Enter Average Mark of students: ");
@@ -108,30 +116,51 @@ void addNewAssignment(Node* head) {
 		printf("Enter Students number: ");
 		gets_s(info->studentsNumber, 5);
 
-		add2list(head, formStringFromSplitted(info));
+		head->string = formStringFromSplitted(info);
+
 	}
 	else {
-		printf("This class is already existed in DataBase. Try to Change Data.\n\n");
-		freeInfo(info);
-		return;
+		gets_s(info->classs, 5);
+		if (!isClassExisted(head, info->classs)) {
+			printf("Enter lastname of Head of the class: ");
+			gets_s(info->classhead, 20);
+			printf("Enter Average Mark of students: ");
+			gets_s(info->averageMark, 5);
+			printf("Enter teachers' lastname and initials: ");
+			gets_s(info->teacher, 20);
+			printf("Enter Students number: ");
+			gets_s(info->studentsNumber, 5);
+
+			add2list(head, formStringFromSplitted(info));
+		}
+		else {
+			printf("This class is already existed in DataBase. Try to Change Data.\n\n");
+			freeInfo(info);
+			return NULL;
+		}
 	}
-
-
-	//printf("Enter lastname of Head of the class: ");
-	//gets_s(info->classhead, 20);
-	//printf("Enter Average Mark of students: ");
-	//gets_s(info->averageMark, 5);
-	//printf("Enter teachers' lastname and initials: ");
-	//gets_s(info->teacher, 20);
-	//printf("Enter Students number: ");
-	//gets_s(info->studentsNumber, 5);
-	//add2list(head, formStringFromSplitted(info));
-
+	
 
 	printf("\n");
 	printSplittedInfo(info);
 	printf("\n");
 	freeInfo(info);
+	return head;
+}
+
+Node* deleteByClass(Node* head) {
+	printf("Enter the class to delete: ");
+	char* delClass = (char*)malloc(sizeof(char) * 80);
+	gets_s(delClass, 80);
+	Node* toDel = findByClass(head, delClass);
+	if (toDel == NULL) {
+		printf("There is no class %s\n", delClass);
+	}
+	else {
+		head = delNode(head, toDel);
+	}
+	free(delClass);
+	return head;
 }
 
 SplittedInfo* createNewSplittedInfo() {
@@ -222,26 +251,24 @@ Node* findByClass(Node* head, char* classs) {
 }
 
 Node* findByClasshead(Node* head, char* classhead) {
-	int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
-		if (strcmp(splitIntoStructure(tmp)->classhead, classhead) == 0) {
+		char* tmppp = splitIntoStructure(tmp)->classhead;
+		if (strcmp(tmppp, classhead) == 0) {
 			return tmp;
 		}
-		i++;
 		tmp = tmp->next;
 	}
 	return NULL;
 }
 
 Node* findByTeacher(Node* head, char* teacher) {
-	int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
-		if (strcmp(splitIntoStructure(tmp)->teacher, teacher) == 0) {
+		char* tmppp = splitIntoStructure(tmp)->teacher;
+		if (strcmp(tmppp, teacher) == 0) {
 			return tmp;
 		}
-		i++;
 		tmp = tmp->next;
 	}
 	return NULL;
@@ -249,7 +276,7 @@ Node* findByTeacher(Node* head, char* teacher) {
 
 void printSplittedInfo(SplittedInfo* info) {
 	printf("Class: %s\n", info->classs);
-	printf("Heado of class: %s\n", info->classhead);
+	printf("Head of class: %s\n", info->classhead);
 	printf("Average mark: %s\n", info->averageMark);
 	printf("Teacher: %s\n", info->teacher);
 	printf("Students number: %s\n", info->studentsNumber);
@@ -263,51 +290,70 @@ void copySplittedInfo(SplittedInfo* dest, SplittedInfo* old) {
 	strcpy(dest->studentsNumber, old->studentsNumber);
 }
 
+void printMenu() {
+	printf("\n=====================================================\n\n");
+	printf("Please, choose your action:\n");
+	printf("1) Add new assignment to database\n");
+	printf("2) Find information by Class\n");
+	printf("3) Find information by Classhead's lastname\n");
+	printf("4) Find information by Teacher's lastname and initials\n");
+	printf("5) Print raw info from Databse file\n\n");
+	printf("Dangerous zone!!\n");
+	printf("6) Change data about Class\n");
+	printf("7) Delete information about Class\n\n");
+	printf("0) Any other input will close this app\n");
+}
+
 void changeData(Node* head) {
 	SplittedInfo* info = createNewSplittedInfo();
 	puts("Enter the class to change information about: ");
 	char* buf = (char*)malloc(sizeof(char) * 5);
 	gets_s(buf, 5);
+	if (!isClassExisted(head, buf)) {
+		printf("This class is not existed now\n");
+		return;
+	}
 	SplittedInfo* oldInfo = splitIntoStructure(findByClass(head, buf));
 	printSplittedInfo(oldInfo);
 	copySplittedInfo(info, oldInfo);
-	puts("Please, enter cipher, what data you want to change");
-	puts("1. Class\n2. Head of the class\n3. Average mark of class\n4. Teacher\n5. Number of students in class\n6. Cancel all changes\nAny other input will save data\n");
+	puts("Please, enter cipher, what data you want to change:");
+	puts("1. Class\n2. Head of the class\n3. Average mark of class\n4. Teacher\n5. Number of students in class\n6. Cancel all changes\n0) Any other input will save data\n");
 	while (true) {
-		printf("Your choice: ");
-		int choice;
-		scanf("%d", &choice);
+		printf("What to change? Enter: ");
+		char* choice = (char*)malloc(sizeof(char) * 10);
+		gets_s(choice, 10);
+		//scanf("%d", &choice);
 
 		//fflush(stdin);
-		switch(choice) {
+		switch(atoi(choice)) {
 			case 1:
-				printf("Enter new Class:");
-				//gets_s(info->classs, 5);
-				scanf("%s", info->classs);
+				printf("Enter new Class: ");
+				gets_s(info->classs, 5);
+				//scanf("%s", info->classs);
 				printf("Class changed\n\n");
 				break;
 			case 2:
 				printf("Enter new Head of class: ");
-				//gets_s(info->classhead, 20);
-				scanf("%s", info->classs);
+				gets_s(info->classhead, 20);
+				//scanf("%s", info->classs);
 				printf("Classhead changed\n\n");
 				break;
 			case 3:
 				printf("Enter new Average Mark: ");
-				//gets_s(info->averageMark, 5);
-				scanf("%s", info->classs);
+				gets_s(info->averageMark, 5);
+				//scanf("%s", info->classs);
 				printf("Average mark changed\n\n");
 				break;
 			case 4:
 				printf("Enter new Teacher: ");
-				//gets_s(info->teacher, 20);
-				scanf("%s", info->classs);
+				gets_s(info->teacher, 20);
+				//scanf("%s", info->classs);
 				printf("Teacher changed\n\n");
 				break;
 			case 5:
 				printf("Enter new Students Number: ");
-				//gets_s(info->studentsNumber, 5);
-				scanf("%s", info->classs);
+				gets_s(info->studentsNumber, 5);
+				//scanf("%s", info->classs);
 				printf("Students number changed\n\n");
 				break;
 			case 6:

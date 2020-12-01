@@ -17,10 +17,11 @@ void print2(Node* phead);
 int len(Node* head);
 Node* find(Node* head, int index);
 void del(Node* head, int index);
+Node* delNode(Node* head, Node* toDelete);
 
 void freeList(Node* head);
 
-void mergeSort(Node** head);
-void split(Node* src, Node** low, Node** high);
-void merge(Node* a, Node* b, Node** c);
+//void mergeSort(Node** head);
+//void split(Node* src, Node** low, Node** high);
+//void merge(Node* a, Node* b, Node** c);
 Node* getLast(Node* head);
