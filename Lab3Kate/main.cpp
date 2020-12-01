@@ -41,11 +41,29 @@ int main() {
 	//mergeSort(&node);
 	//print2(node);
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 2; i++) {
 		addNewAssignment(node);
 	}
-	
+	puts("----------------------------");
+	puts("----------------------------");
+	puts("----------------------------");
 	printAll(node);
+	/*puts("----------------------------");
+	puts("----------------------------");
+	puts("----------------------------");
+	printf("\n\n");
+	puts("What to find?");
+	char* tmp = (char*)malloc(sizeof(char) * 50);
+	gets_s(tmp, 5);*/
+	
+	
+	//printSplittedInfo(splitIntoStructure(findByClass(node, tmp)));
 
+	changeData(node);
+
+
+	printf("\n=================\n");
+	printAll(node);
+	freeList(node);
 	return 0;
 }

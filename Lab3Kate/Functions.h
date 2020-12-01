@@ -18,3 +18,5 @@ bool isClassExisted(Node* head, char* isClass);
 SplittedInfo* createNewSplittedInfo();
 void addNewAssignment(Node* head);
 void changeData(Node* head);
+void copySplittedInfo(SplittedInfo* dest, SplittedInfo* old);
+void freeInfo(SplittedInfo* info);
