@@ -11,6 +11,77 @@ void addLine(char* fileName, char* string) {
 		//    return 0;
 	}
 	fwrite(string, sizeof(char), strlen(string), f);
+	
+	fclose(f);
+}
+
+void saveToFile(Node* head, char* fileName) {
+	FILE* f = fopen(fileName, "w");
+	Node* tmp = head;
+	while (tmp) {
+		//fwrite(tmp->string, sizeof(char), strlen(tmp->string), f);
+		fputs(tmp->string, f);
+		fputs("\n", f);
+		printf("Written: %s\n", tmp->string);
+		tmp = tmp->next;
+	}
+
+	fclose(f);
+}
+
+void initFromFile(Node* head, char* fileName) {
+	FILE* f = fopen(fileName, "r");
+
+	if (f == NULL) {
+		printf("File does not exist\n");
+		return;
+	}
+	// freeList(head);
+
+	//if (fgets(mystring, 100, f) != NULL) // считать символы из файла
+	//	puts(mystring);  // вывод на экран
+	char* mystring = (char*)malloc(sizeof(char) * 80);
+	Node* tmp = head;
+	while (fgets(mystring, 100, f) != NULL) {
+		char* tmpchr = strchr(mystring, '\n');
+		*tmpchr = '\0';
+
+		if (head == NULL) {		// e.g. head = null
+			char* newstr = (char*)malloc(sizeof(char) * 80);
+			strcpy(newstr, mystring);
+			initList(head, newstr);
+		}
+		else {
+			char* newstr = (char*)malloc(sizeof(char) * 80);
+			strcpy(newstr, mystring);
+			add2list(head, newstr);
+			//tmp = tmp->next;
+		}
+		
+		//printf("Written: %s\n", tmp->string);
+		//tmp = tmp->next;
+	}
+	free(mystring);
+	fclose(f);
+}
+
+void readFrom(char* fileName) {
+	FILE* f = fopen(fileName, "r");
+
+	if (f == NULL) {
+		printf("File does not exist\n");
+		return;
+	}
+
+	char* mystring = (char*)malloc(sizeof(char) * 80);
+	
+	while (fgets(mystring, 100, f) != NULL) {
+		char* tmpchr = strchr(mystring, '\n');
+		*tmpchr = '\0';
+
+		puts(mystring);  // вывод на экран
+	}
+	free(mystring);
 	fclose(f);
 }
 

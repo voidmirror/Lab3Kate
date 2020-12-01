@@ -20,3 +20,6 @@ void addNewAssignment(Node* head);
 void changeData(Node* head);
 void copySplittedInfo(SplittedInfo* dest, SplittedInfo* old);
 void freeInfo(SplittedInfo* info);
+void saveToFile(Node* head, char* fileName);
+void initFromFile(Node* head, char* fileName);
+void readFrom(char* fileName);

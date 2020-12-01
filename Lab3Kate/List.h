@@ -9,6 +9,7 @@ typedef struct Node {
 
 void push(Node* head, char* str);
 //void add2list(Node** pphead, char* str);
+void initList(Node* head, char* str);
 void add2list(Node* head, char* str);
 void printAll(Node* head);
 void print2(Node* phead);

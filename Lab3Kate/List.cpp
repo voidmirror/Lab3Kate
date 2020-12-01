@@ -13,6 +13,12 @@ void add2list(Node* head, char* str) {
     push(getLast(head), str);
 }
 
+void initList(Node* head, char* str) {
+    head = (Node*)malloc(sizeof(Node));
+    head->string = str;
+    head->next = NULL;
+}
+
 //void add2list(Node** pphead, char* str)
 //{
 //    Node** pp = pphead, * pnew;
