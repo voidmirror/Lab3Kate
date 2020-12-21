@@ -1,5 +1,5 @@
 #include <string.h>
-#include "list.h"
+#include "List.h"
 
 void push(Node* head, char* str) {
     Node* newNode = (Node*)malloc(sizeof(Node));

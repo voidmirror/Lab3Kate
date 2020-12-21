@@ -1,29 +1,15 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include "Functions.h"
 #include "List.h"
 
-void addLine(char* fileName, char* string) {
-	FILE* f = fopen(fileName, "a");
-	if (f == NULL) {
-		printf("File does not exist\n");
-		//    return 0;
-	}
-	fwrite(string, sizeof(char), strlen(string), f);
-	
-	fclose(f);
-}
-
 void saveToFile(Node* head, char* fileName) {
 	FILE* f = fopen(fileName, "w");
 	Node* tmp = head;
 	while (tmp) {
-		//fwrite(tmp->string, sizeof(char), strlen(tmp->string), f);
 		fputs(tmp->string, f);
 		fputs("\n", f);
-		//printf("Written: %s\n", tmp->string);
 		tmp = tmp->next;
 	}
 
@@ -34,23 +20,18 @@ Node* initFromFile(Node* head, char* fileName) {
 	FILE* f = fopen(fileName, "r");
 
 	if (f == NULL) {
-		//printf("File does not exist\n");
 		return NULL;
 	}
-	// freeList(head);
-
-	//if (fgets(mystring, 100, f) != NULL) // считать символы из файла
-	//	puts(mystring);  // вывод на экран
+	
 	char* mystring = (char*)malloc(sizeof(char) * 80);
 	Node* tmp = head;
 	while (fgets(mystring, 100, f) != NULL) {
 		char* tmpchr = strchr(mystring, '\n');
 		*tmpchr = '\0';
 
-		if (head == NULL) {		// e.g. head = null
+		if (head == NULL) {
 			char* newstr = (char*)malloc(sizeof(char) * 80);
 			strcpy(newstr, mystring);
-			//initList(head, newstr);
 			head = (Node*)malloc(sizeof(Node));
 			head->string = newstr;
 			head->next = NULL;
@@ -59,35 +40,11 @@ Node* initFromFile(Node* head, char* fileName) {
 			char* newstr = (char*)malloc(sizeof(char) * 80);
 			strcpy(newstr, mystring);
 			add2list(head, newstr);
-			//tmp = tmp->next;
 		}
-		
-		//printf("Written: %s\n", tmp->string);
-		//tmp = tmp->next;
 	}
 	free(mystring);
 	fclose(f);
 	return head;
-}
-
-void readFrom(char* fileName) {
-	FILE* f = fopen(fileName, "r");
-
-	if (f == NULL) {
-		printf("File does not exist\n");
-		return;
-	}
-
-	char* mystring = (char*)malloc(sizeof(char) * 80);
-	
-	while (fgets(mystring, 100, f) != NULL) {
-		char* tmpchr = strchr(mystring, '\n');
-		*tmpchr = '\0';
-
-		puts(mystring);  // вывод на экран
-	}
-	free(mystring);
-	fclose(f);
 }
 
 bool isClassExisted(Node* head, char* isClass) {
@@ -102,39 +59,32 @@ bool isClassExisted(Node* head, char* isClass) {
 Node* addNewAssignment(Node* head) {
 	SplittedInfo* info = createNewSplittedInfo();
 	printf("Enter the Class: ");
-	if (head == NULL) {		// e.g. head = null
+	if (head == NULL) {
 		head = (Node*)malloc(sizeof(Node));
 		head->string = (char*)malloc(sizeof(char) * 80);
 		head->next = NULL;
 		
-		//gets_s(info->classs, 5);
 		scanf("%s", info->classs);
 		printf("Enter lastname of Head of the class: ");
-		//gets_s(info->classhead, 20);
 		scanf("%s", info->classhead);
 		printf("Enter Average Mark of students: ");
-		//gets_s(info->averageMark, 5);
 		scanf("%s", info->averageMark);
 		printf("Enter teachers' lastname and initials: ");
-		//gets_s(info->teacher, 20);
 		scanf("%s", info->teacher);
 		printf("Enter Students number: ");
-		//gets_s(info->studentsNumber, 5);
 		scanf("%s", info->studentsNumber);
 
 		head->string = formStringFromSplitted(info);
 
 	}
 	else {
-		//gets_s(info->classs, 5);
 		scanf("%s", info->classs);
 		if (!isClassExisted(head, info->classs)) {
 			printf("Enter lastname of Head of the class: ");
-			//gets_s(info->classhead, 20);
 			scanf("%s", info->classhead);
 			printf("Enter Average Mark of students: ");
 			scanf("%s", info->averageMark);
-			printf("Enter teachers' lastname and initials: ");
+			printf("Enter teachers' lastname: ");
 			scanf("%s", info->teacher);
 			printf("Enter Students number: ");
 			scanf("%s", info->studentsNumber);
@@ -193,11 +143,6 @@ SplittedInfo* splitIntoStructure(Node* node) {
 	char misc[5][20];
 	char* lex = strtok(tmp, ":");
 	SplittedInfo *info = createNewSplittedInfo();
-	/*info->classs = (char*)malloc(sizeof(char) * 5);
-	info->classhead = (char*)malloc(sizeof(char) * 20);
-	info->averageMark = (char*)malloc(sizeof(char) * 5);
-	info->teacher = (char*)malloc(sizeof(char) * 20);
-	info->studentsNumber = (char*)malloc(sizeof(char) * 5);*/
 	
 	int i = 0;
 	while (lex != NULL)
@@ -217,9 +162,6 @@ SplittedInfo* splitIntoStructure(Node* node) {
 }
 
 char* formStringFromSplitted(SplittedInfo* info) {
-	//return char*
-	// 5 + 20 + 5 + 20 + 5 + 5 (symb)
-
 	char* misc = (char*)malloc(sizeof(char) * (80));
 	misc[0] = '\0';
 	strcat(misc, info->classs);
@@ -245,14 +187,12 @@ void freeInfo(SplittedInfo* info) {
 }
 
 Node* findByClass(Node* head, char* classs) {
-	//int i = 0;
 	Node* tmp = head;
 	while (tmp != NULL) {
 		char* tmppp = splitIntoStructure(tmp)->classs;
 		if (strcmp(tmppp, classs) == 0) {
 			return tmp;
 		}
-		//i++;
 		tmp = tmp->next;
 	}
 	return NULL;
@@ -304,7 +244,7 @@ void printMenu() {
 	printf("1) Add new assignment to database\n");
 	printf("2) Find information by Class\n");
 	printf("3) Find information by Classhead's lastname\n");
-	printf("4) Find information by Teacher's lastname and initials\n");
+	printf("4) Find information by Teacher's lastname\n");
 	printf("5) Print raw info from Database file\n\n");
 	printf("Dangerous zone!!\n");
 	printf("6) Change data about Class\n");
@@ -330,38 +270,31 @@ void changeData(Node* head) {
 		printf("What to change? Enter: ");
 		char* choice = (char*)malloc(sizeof(char) * 10);
 		scanf("%s", choice);
-		//scanf("%d", &choice);
-
-		//fflush(stdin);
+		
 		switch(atoi(choice)) {
 			case 1:
 				printf("Enter new Class: ");
 				scanf("%s", info->classs);
-				//scanf("%s", info->classs);
 				printf("Class changed\n\n");
 				break;
 			case 2:
 				printf("Enter new Head of class: ");
 				scanf("%s", info->classhead);
-				//scanf("%s", info->classs);
 				printf("Classhead changed\n\n");
 				break;
 			case 3:
 				printf("Enter new Average Mark: ");
-				scanf(info->averageMark);
-				//scanf("%s", info->classs);
+				scanf("%s", info->averageMark);
 				printf("Average mark changed\n\n");
 				break;
 			case 4:
 				printf("Enter new Teacher: ");
-				scanf(info->teacher);
-				//scanf("%s", info->classs);
+				scanf("%s", info->teacher);
 				printf("Teacher changed\n\n");
 				break;
 			case 5:
 				printf("Enter new Students Number: ");
-				scanf(info->studentsNumber);
-				//scanf("%s", info->classs);
+				scanf("%s", info->studentsNumber);
 				printf("Students number changed\n\n");
 				break;
 			case 6:
@@ -375,7 +308,6 @@ void changeData(Node* head) {
 				puts("Saving data and exit");
 				puts("New data:");
 				printSplittedInfo(info);
-				//free(findByClass(head, buf)->string);		// works?
 				findByClass(head, buf)->string = formStringFromSplitted(info);
 				free(buf);
 				freeInfo(info);

@@ -1,12 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
-//#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
 #include <stdbool.h>
-#include <map>
-#include <hash_map>
 #include "Functions.h"
 #include "List.h"
 
@@ -18,7 +14,6 @@ int main() {
 	printf("|----------------------------|\n\n");
 	printf("Enter filename of your database: ");
 	char* fileName = (char*)malloc(sizeof(char) * 80);
-	//gets_s(fileName, 80);
 	scanf("%s", fileName);
 	Node* head = NULL;
 	head = initFromFile(head, fileName);
@@ -29,12 +24,9 @@ int main() {
 	char* choice = (char*)malloc(sizeof(char) * 10);
 	bool working = true;
 	
-	//printAll(head);
-
 	while (working) {
 		printMenu();
 		printf("\nYour action choice: ");
-		//gets_s(choice, 10);
 		scanf("%s", choice);
 		char* tmp = (char*)malloc(sizeof(char) * 20);
 		Node* toFind;
@@ -46,7 +38,6 @@ int main() {
 		case 2:
 			printf("Enter Class: ");
 			scanf("%s", tmp);
-			//gets_s(tmp, 10);
 			toFind = findByClass(head, tmp);
 			if (toFind == NULL) {
 				printf("There is no Class %s\n", tmp);
@@ -58,7 +49,6 @@ int main() {
 			break;
 		case 3:
 			printf("Enter Classhead's lastname: ");
-			//gets_s(tmp, 20);
 			scanf("%s", tmp);
 			toFind = findByClasshead(head, tmp);
 			if (toFind == NULL) {
@@ -70,8 +60,7 @@ int main() {
 			free(tmp);
 			break;
 		case 4:
-			printf("Enter Teacher's lastame (Ex.: Voronina E.A.): ");
-			//gets_s(tmp, 20);
+			printf("Enter Teacher's lastame: ");
 			scanf("%s", tmp);
 			toFind = findByTeacher(head, tmp);
 			if (toFind == NULL) {
@@ -97,74 +86,11 @@ int main() {
 			saveToFile(head, fileName);
 			working = false;
 		}
+		saveToFile(head, fileName);
 	}
 
-
-
-
-	//================================================================================
-	//
-	//                                  TESTING
-	//
-	//================================================================================
-
-	//char* fileName = (char*)malloc(sizeof(char) * 80);
-	//printf("Enter database file name: ");
-	////scanf("%s", fileName);
-	//gets_s(fileName, 80);
-	//Node* head = NULL;
-
-	//head = initFromFile(head, fileName);
-	//if (head == NULL) {
-	//	printf("File does not exist or is empty. Database created");
-	//}
-	////readFrom(fileName);
-
-	//printAll(head);
-
-
-	////Node *node = (Node*) malloc(sizeof(Node));
-	////char misc[] = "11A:Sviridova:4.16:Frolova A.M.:27\0";	//		\0 needed ?
-	////node->string = (char*)malloc(sizeof(char) * strlen(misc) + 10);
-	////node->string = misc;
-	////node->next = NULL;
-	//
-
-	//puts("----------------------------");
-	//puts("----------------------------");
-	//puts("----------------------------");
-
-	//for (int i = 0; i < 2; i++) {
-	//	head = addNewAssignment(head);
-	//}
-	//puts("----------------------------");
-	//puts("----------------------------");
-	//puts("----------------------------");
-	//printAll(head);
-
-	////head = deleteByClass(head);
-
-	//puts("----------------------------");
-	//puts("----------------------------");
-	//puts("----------------------------");
-	//printAll(head);
-	//
-	//
-
-	//saveToFile(head, fileName);
-	//
-
-
-	//printf("\n=================\n");
-	//printAll(head);
-
-	//================================================================================
-	//
-	//                                  TESTING
-	//
-	//================================================================================
-
 	// End of program ====================================================================
+	printf("See you soon :)\n");
 	freeList(head);
 	return 0;
 }
