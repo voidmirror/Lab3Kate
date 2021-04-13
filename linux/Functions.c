@@ -8,8 +8,8 @@ void saveToFile(Node* head, char* fileName) {
 	FILE* f = fopen(fileName, "w");
 	Node* tmp = head;
 	while (tmp) {
-		fputs(tmp->string, f);
-		fputs("\n", f);
+		fputs(tmp->string, f);	//fout
+		fputs("\n", f);			//fout
 		tmp = tmp->next;
 	}
 
