@@ -1,33 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include "School.h"
-//#include "Info.h"
 
 int main(int argc, char* argv[]) {
-	//char* tmp = (char*)malloc(sizeof(char) * 30);
-	//cout << "Enter name of file: ";
-	//cin >> tmp;
-	//School* school = new School();
-	//school->initFromFile(tmp);
-	//school->printAllClasses();
-
-	//for (int i = 0; i < 2; i++) {
-	//	Info* toAdd = new Info;
-	//	toAdd->fillInfo();
-	//	school->addClass(toAdd);
-	//}
-
-	//cout << endl << endl << endl;
-
-	////school->initFromFile(tmp);
-	//
-	//school->printAllClasses();
-
-	//school->saveToFile(tmp);
-
-
-	//=================================================================
-
 	cout << "|----------------------------|" << endl;
 	cout << "| Perfect School Database TM |" << endl;
 	cout << "|       Chapter 2: C++       |" << endl;

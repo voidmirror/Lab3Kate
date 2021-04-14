@@ -18,7 +18,6 @@ void School::addClass(Info* info) {
 	else {
 		Info* tmp = getLast();
 		tmp->setNext(info);
-		//getLast()
 	}
 }
 
