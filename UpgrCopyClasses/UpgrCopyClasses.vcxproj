@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{07dd1908-be8a-4c41-be69-60ef5f795691}</ProjectGuid>
-    <RootNamespace>Upgradim</RootNamespace>
+    <ProjectGuid>{4c899356-4de3-4632-b4dc-c8dd93a48bbe}</ProjectGuid>
+    <RootNamespace>UpgrCopyClasses</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,16 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Info.cpp" />
-    <ClCompile Include="List.c" />
-    <ClCompile Include="List.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="School.cpp" />
+    <ClInclude Include="Info.h" />
+    <ClInclude Include="School.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Info.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="School.h" />
+    <ClCompile Include="Info.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="School.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
