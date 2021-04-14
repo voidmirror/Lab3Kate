@@ -4,6 +4,8 @@
 
 #include "School.h"
 
+using namespace std;
+
 School::School()
 {
 	head = NULL;
@@ -35,7 +37,9 @@ void School::removeClass(char* classs) {
 		}
 		tmp->setNext(toRemove->getNext());
 	}
-	// else cout << "Class does not exist" << endl;
+	else {
+		cout << "Class does not exist" << endl;
+	}
 }
 
 Info* School::findByClass(char* classs) {
@@ -49,10 +53,32 @@ Info* School::findByClass(char* classs) {
 	return NULL;
 }
 
+Info* School::findByClasshead(char* classhead) {
+	Info* tmp = head;
+	while (tmp != NULL) {
+		if (strcmp(tmp->getClasshead(), classhead) == 0) {
+			return tmp;
+		}
+		tmp = tmp->getNext();
+	}
+	return NULL;
+}
+
+Info* School::findByTeacher(char* teacher) {
+	Info* tmp = head;
+	while (tmp != NULL) {
+		if (strcmp(tmp->getTeacher(), teacher) == 0) {
+			return tmp;
+		}
+		tmp = tmp->getNext();
+	}
+	return NULL;
+}
+
 void School::printAllClasses() {
 	Info* tmp = head;
 	while (tmp != NULL) {
-		cout << tmp->toString();
+		cout << tmp->toString() << endl;
 		tmp = tmp->getNext();
 	}
 }
@@ -86,7 +112,7 @@ void School::changeClass(char* classs) {
 				strcpy(dest->getClasss(), toChange);
 				break;
 			case 2:
-				cout << "Enter new classhead's lastname:";
+				cout << "Enter new Head of class (lastname):";
 				cin >> toChange;
 				strcpy(dest->getClasss(), toChange);
 			case 3:
@@ -124,13 +150,13 @@ void School::changeClass(char* classs) {
 	}
 }
 
-bool School::initFromFile() {
+void School::initFromFile(char* file) {
 	ifstream fin;
-	fin.open("school.bin", ios_base::in);		//ifstream::in
+	fin.open(file, ios_base::in);		//ifstream::in
 	if (!fin.is_open()) {
 		cout << "# File does not exist" << endl;
 		ofstream fout;
-		fout.open("school.bin", ios_base::out);
+		fout.open(file, ios_base::out);
 		cout << "# New database file created" << endl;
 	}
 
@@ -150,14 +176,34 @@ bool School::initFromFile() {
 
 		Info* info = new Info();
 		
-		strcpy(info->classs, source->getClasss());
-		strcpy(this->classhead, source->getClasshead());
-		strcpy(this->averageMark, source->getAverageMark());
-		strcpy(this->teacher, source->getTeacher());
-		strcpy(this->studentsNumber, source->getStudentsNumber());
+		strcpy(info->getClasss(), misc[0]);
+		strcpy(info->getClasshead(), misc[1]);
+		strcpy(info->getAverageMark(), misc[2]);
+		strcpy(info->getTeacher(), misc[3]);
+		strcpy(info->getStudentsNumber(), misc[4]);
 
+		addClass(info);
+
+		free(tmp);
+		tmp = (char*)malloc(sizeof(char) * 200);
 	}
 
+	fin.close();
+	
+}
+
+void School::saveToFile(char* file) {
+	char* tmp = (char*)malloc(sizeof(char) * 200);
+
+	ofstream fout;
+	fout.open(file, ios_base::out);
+	Info* info = head;
+	while (info != NULL) {
+		fout << info->toSaveString();
+		fout << '\n';
+		info = info->getNext();
+	}
+	fout.close();
 }
 
 Info* School::getLast() {

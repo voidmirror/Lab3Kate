@@ -87,12 +87,32 @@ char* Info::toString() {
 	return str;
 }
 
-void Info::fillInfo(Info* info) {
-	cin >> info->getClasss();
-	cin >> info->getClasshead();
-	cin >> info->getAverageMark();
-	cin >> info->getTeacher();
-	cin >> info->getStudentsNumber();
+char* Info::toSaveString() {
+	char* str = (char*)malloc(sizeof(char) * 200);
+	str[0] = '\0';
+	strcat(str, classs);
+	strcat(str, ":");
+	strcat(str, classhead);
+	strcat(str, ":");
+	strcat(str, averageMark);
+	strcat(str, ":");
+	strcat(str, teacher);
+	strcat(str, ":");
+	strcat(str, studentsNumber);
+	return str;
+}
+
+void Info::fillInfo() {
+	cout << "Enter class num: ";
+	cin >> this->getClasss();
+	cout << "Enter Head of class (lastname): ";
+	cin >> this->getClasshead();
+	cout << "Enter average mark: ";
+	cin >> this->getAverageMark();
+	cout << "Enter Teacher's lastname: ";
+	cin >> this->getTeacher();
+	cout << "Enter Students number: ";
+	cin >> this->getStudentsNumber();
 }
 
 void Info::clone(Info* source) {

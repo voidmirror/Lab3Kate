@@ -14,8 +14,8 @@ public:
 	void changeClass(char* classs);
 	void printAllClasses();
 
-	void initFromFile();
-	void saveToFile();
+	void initFromFile(char* file);
+	void saveToFile(char* file);
 
 	Info* getLast();
 
@@ -27,6 +27,8 @@ public:
 
 
 	Info* findByClass(char* classs);
+	Info* findByClasshead(char* classhead);
+	Info* findByTeacher(char* teacher);
 	/*Node* findByClasshead(Node* head, char* headFind);
 	Node* findByTeacher(Node* head, char* teacher);
 	bool isClassExisted(Node* head, char* isClass);

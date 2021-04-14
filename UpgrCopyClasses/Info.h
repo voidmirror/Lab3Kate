@@ -18,6 +18,7 @@ public:
 	~Info();
 	Info(char* classs, char* classhead, char* averageMark, char* teacher, char* studentsNumber);
 	char* toString();
+	char* toSaveString();
 
 
 	char* getClasss();
@@ -27,7 +28,7 @@ public:
 	char* getStudentsNumber();
 	Info* getNext();
 	void setNext(Info* info);
-	void fillInfo(Info* info);
+	void fillInfo();
 	void clone(Info* source);
 
 	/*Node* findByClass(Node* head, char* classs);
